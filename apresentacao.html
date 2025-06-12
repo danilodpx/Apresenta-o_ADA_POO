@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Engajamento - Mídias Globo com POO</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">14</span>
+        </div>
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <div class="slide-content">
+                <h1><i class="fab fa-python"></i> Análise de Engajamento de Mídias Globo com POO</h1>
+                <div class="grupo-info">
+                    <h3><i class="fas fa-project-diagram"></i> Projeto Unificado - Fase 2</h3>
+                    <div class="membros">
+                        <div class="membro">Daniel Brambila</div>
+                        <div class="membro">Danilo Pinho</div>
+                        <div class="membro">Edvaldo Oliveira</div>
+                        <div class="membro">Felipe Martins</div>
+                        <div class="membro">Lucas Sandes</div>
+                        <div class="membro">Malu Fazenda</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 2: Introdução -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-bullseye"></i> Introdução e Objetivos</h2>
+                <p>Sejam bem-vindos à apresentação do nosso Projeto Unificado - Fase 2. Aplicamos princípios e técnicas de POO em Python para criar um sistema robusto, modular e extensível que modela, processa e analisa interações de usuários nas plataformas Globo (G1 e Globoplay).</p>
+                <ul>
+                    <li>Refatoração da base de código da Fase 1</li>
+                    <li>Garantia de integridade de dados</li>
+                    <li>Aderência aos paradigmas de POO</li>
+                    <li>Geração de relatórios e métricas de engajamento</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Slide 3: Arquitetura -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-sitemap"></i> Arquitetura do Projeto</h2>
+                <p>Organização em pacotes e módulos para promover modularidade e manutenibilidade:</p>
+                <pre class="estrutura-diretorios">
+projeto_engajamento_fase2/
+├── main.py               # Script principal de execução
+├── interacoes_globo.csv  # Arquivo com dados brutos de interações
+├── entidades/            # Subpacote com entidades do domínio
+│   ├── __init__.py
+│   ├── plataforma.py     # Classe Plataforma
+│   ├── conteudo.py       # Classes Conteudo, Video, Podcast, Artigo
+│   ├── interacao.py      # Classe Interacao
+│   └── usuario.py        # Classe Usuario
+├── analise/              # Subpacote com sistema de análise
+│   ├── __init__.py
+│   └── sistema.py        # Classe Sistema Analise Engajamento
+└── README.md
+                </pre>
+            </div>
+        </div>
+        <!-- Slide 4: Diagrama de Módulos -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-layer-group"></i> Diagrama de Módulos</h2>
+                <p>Visão geral da divisão dos módulos e pacotes do projeto:</p>
+                <img src="img/diagrama_de_modulos.png" alt="Diagrama de módulos do projeto" style="max-width:90%;margin:auto;display:block;background:#fff;padding:10px;border-radius:8px;">
+            </div>
+        </div>
+        <!-- Slide 5: Diagrama de Classes -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-project-diagram"></i> Diagrama de Classes</h2>
+                <p>Representação das principais classes, atributos e relacionamentos:</p>
+                <img src="img/diagrama_de_classes.png" alt="Diagrama de classes do projeto" style="max-width:80%;margin:auto;display:block;background:#fff;padding:10px;border-radius:8px;">
+            </div>
+        </div>
+        <!-- Slide 6: Modelagem das Classes -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-cog"></i> Modelagem das Classes</h2>
+                <p>Aplicamos encapsulamento, herança e polimorfismo para criar um modelo coeso e representativo:</p>
+                <ul>
+                    <li>BaseConteudo → Video, Podcast, Artigo</li>
+                    <li>Encapsulamento com properties e validações</li>
+                    <li>Métodos mágicos (__eq__, __hash__, __str__)</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Slide 7: Classe Plataforma -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-server"></i> Classe Plataforma</h2>
+                <p>Modela uma plataforma de mídia com atributos e métodos para manipulação de dados:</p>
+                <div class="classe-box">
+                    <h3>Encapsulamento e Validação:</h3>
+                    <ul>
+                        <li>Os atributos <code>_id_plataforma</code> e <code>_nome_plataforma</code> são privados.</li>
+                        <li>O acesso a <code>nome_plataforma</code> é controlado por <code>@property</code> e <code>@nome_plataforma.setter</code>.</li>
+                        <li>O setter garante que o nome da plataforma não seja uma string nula ou vazia, lançando um <code>ValueError</code> se a condição não for atendida.</li>
+                        <li>Isso assegura a integridade dos nossos objetos desde a sua criação.</li>
+                    </ul>
+                    <pre class="codigo"><code class="language-python">
+@nome_plataforma.setter
+def nome_plataforma(self, nome: str):
+    """Define ou atualiza o nome da plataforma, com validação."""
+    if not isinstance(nome, str) or not nome.strip():
+        raise ValueError("O nome da plataforma não pode ser nulo ou vazio.")
+    self._nome_plataforma = nome.strip()
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+
+<!-- Slide 8: Métodos Mágicos -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-magic"></i> Métodos Mágicos</h2>
+                <div class="classe-box">
+                    <ul>
+                        <li><code>__str__</code>: Retorna o nome da plataforma, facilitando a exibição.</li>
+                        <li><code>__eq__</code> e <code>__hash__</code>: Permitem que objetos <strong>Plataforma</strong> sejam comparados (ignorando maiúsculas/minúsculas) e utilizados de forma eficiente em coleções como <code>set</code> e chaves de dicionários.</li>
+                        <li>Isso é crucial para, por exemplo, contar as plataformas mais frequentes para um usuário.</li>
+                    </ul>
+                    <pre class="codigo"><code class="language-python">
+# extraído de plataforma.py
+def __eq__(self, other) -> bool:
+    """Verifica se duas instâncias de Plataforma são iguais."""
+    if not isinstance(other, Plataforma):
+        return NotImplemented
+    return self.nome_plataforma.lower() == other.nome_plataforma.lower() 
+
+def __hash__(self) -> int:
+    """Retorna o hash do objeto, baseado no nome da plataforma.""" 
+    return hash(self.nome_plataforma.lower()) 
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Classe Conteúdo -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-layer-group"></i> Classe Conteúdo</h2>
+                <div class="classe-box">
+                    <p>
+                        <strong>A classe <code>BaseConteudo</code> representa um item de conteúdo consumível.</strong>
+                    </p>
+                    <h3>Herança e Polimorfismo:</h3>
+                    <ul>
+                        <li><code>Conteudo</code> serve como classe mãe para <code>Video</code>, <code>Podcast</code> e <code>Artigo</code>.</li>
+                        <li>Essas classes filhas herdam atributos e métodos comuns, como <code>adicionar_interacao</code> e <code>calcular_total_interacoes_engajamento</code>, mas também adicionam atributos próprios (<code>_duracao_total_video_seg</code>, etc.) e podem sobrescrever métodos.</li>
+                        <li>Exemplo de polimorfismo: o método <code>calcular_percentual_medio_assistido</code> na classe <code>Video</code>, específico para esse tipo de conteúdo.</li>
+                    </ul>
+                    <h3>Funcionalidades de Análise:</h3>
+                    <ul>
+                        <li><code>calcular_total_interacoes_engajamento()</code>: Soma interações valiosas como 'like', 'share' e 'comment'.</li>
+                        <li><code>calcular_contagem_por_tipo_interacao()</code>: Retorna um dicionário com a contagem de cada tipo de interação.</li>
+                        <li><code>calcular_media_tempo_consumo()</code>: Calcula o tempo médio que os usuários passaram consumindo aquele conteúdo.</li>
+                        <li><code>listar_comentarios()</code>: Agrega todos os comentários feitos em um conteúdo.</li>
+                    </ul>
+                    <pre class="codigo"><code class="language-python">
+# extraído de Conteudo.py
+def calcular_media_tempo_consumo(self):
+    """Calcula a média do tempo de consumo maior que zero"""
+    tempos = [getattr(inter, 'watch_duration_seconds', 0) or 0 for inter in
+              self._interacoes if getattr(inter, 'watch_duration_seconds', 0)] 
+    if tempos:
+        return sum(tempos) / len(tempos) 
+    return 0 
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 10: Classe Interação -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-exchange-alt"></i> Classe Interação</h2>
+                <div class="classe-box">
+                    <p>
+                        <strong>Modela uma única ação de um usuário em um conteúdo.</strong>
+                    </p>
+                    <h3>Validação no Construtor <code>__init__</code>:</h3>
+                    <ul>
+                        <li>O construtor (<code>__init__</code>) é responsável por receber uma linha do CSV e transformá-la em um objeto <code>Interacao</code> válido.</li>
+                        <li>Realiza validações cruciais, como verificar se o <code>tipo_interacao</code> está na lista de tipos válidos (<code>TIPOS_INTERACAO_VALIDOS</code>) e garantir que <code>watch_duration_seconds</code> não seja negativo.</li>
+                        <li>Isso garante a consistência dos dados que entram no sistema.</li>
+                    </ul>
+                    <pre class="codigo"><code class="language-python">
+# extraído de interacao.py
+class Interacao:
+    def __init__(self, conteudo_associado: Conteudo, plataforma_interacao: Plataforma, linha_csv: list) -> None:
+        TIPOS_INTERACAO_VALIDOS = ['view_start', 'like', 'share', 'comment'] 
+        # ... (atribuição de outros atributos)
+        if linha_csv[5] in TIPOS_INTERACAO_VALIDOS:
+            self._tipo_interacao = linha_csv[5] 
+        else:
+            self._tipo_interacao = "Interação inválida" 
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 11: Classe Usuário -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-user"></i> Classe Usuário</h2>
+                <div class="classe-box">
+                    <p>
+                        <strong>Agrega todas as interações realizadas por um único usuário.</strong>
+                    </p>
+                    <h3>Métodos de Análise por Usuário:</h3>
+                    <ul>
+                        <li><code>registrar_interacao()</code>: Adiciona uma nova interação à lista de interações do usuário.</li>
+                        <li><code>calcular_tempo_total_consumo_plataforma()</code>: Calcula o tempo de consumo de um usuário em uma plataforma específica.</li>
+                        <li><code>plataformas_mais_frequentes()</code>: Retorna uma lista com as plataformas mais utilizadas pelo usuário, demonstrando a utilidade dos métodos <code>__eq__</code> e <code>__hash__</code> da classe Plataforma.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 12: Sistema Analise Engajamento -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-chart-line"></i> Sistema Analise Engajamento</h2>
+                <div class="classe-box">
+                    <p>
+                        <strong>É a classe orquestradora do sistema.</strong> Ela gerencia as coleções de plataformas, conteúdos e usuários, funcionando como um "CRUD" em memória.
+                    </p>
+                    <h3>Responsabilidades:</h3>
+                    <ul>
+                        <li>
+                            <strong>Carga e Processamento:</strong> O método <code>processar_interacoes_do_csv</code> lê o arquivo <code>interacoes_globo.csv</code> e, para cada linha, instancia (ou obtém) os objetos <code>Plataforma</code>, <code>Conteudo</code>, <code>Usuario</code> e <code>Interacao</code> correspondentes, vinculando-os corretamente.
+                        </li>
+                        <li>
+                            <strong>Geração de Relatórios:</strong> Métodos como <code>gerar_relatorio_engajamento_conteudos</code> e <code>gerar_relatorio_atividade_usuarios</code> iteram sobre os dicionários de objetos registrados (<code>_conteudos_registrados</code>, <code>_usuarios_registrados</code>) e utilizam os métodos de cálculo de cada objeto para exibir as métricas, delegando a responsabilidade do cálculo para as próprias entidades.
+                        </li>
+                        <li>
+                            <strong>Análise:</strong> O método <code>identificar_top_conteudos</code> permite encontrar os conteúdos mais populares com base em uma métrica específica, como <code>'tempo_total_consumo'</code>.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+       
+        <!-- Slide 13: Funcionalidades e Execução -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-tools"></i> Funcionalidades e Execução</h2>
+                <div class="funcionalidade">
+                    <ul>
+                        <li><strong>Validação de Dados:</strong> Construtores robustos garantem a integridade dos dados.</li>
+                        <li><strong>Registro e Agregação:</strong> As interações são corretamente associadas a conteúdos e usuários.</li>
+                        <li><strong>Cálculo de Métricas:</strong> O sistema calcula o total de interações, tempo de consumo e agrega comentários.</li>
+                        <li><strong>Geração de Relatórios:</strong> Apresenta o engajamento por conteúdo e por usuário.</li>
+                        <li><strong>Identificação de Tendências:</strong> Aponta os conteúdos mais populares por métrica.</li>
+                    </ul>
+                    <p>
+                        Para executar, basta clonar o repositório e rodar <code>python main.py</code>, garantindo que o <code>interacoes_globo.csv</code> esteja presente.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 14: Conclusão e Aprendizados -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-flag-checkered"></i> Conclusão e Aprendizados</h2>
+                <div class="aprendizados">
+                    <p>
+                        Este projeto foi uma imersão profunda e prática nos pilares da Programação Orientada a Objetos. Os principais aprendizados foram:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Design Orientado a Objetos:</strong> A aplicação de encapsulamento, herança e polimorfismo resultou em um código mais limpo, reutilizável e fácil de manter.
+                        </li>
+                        <li>
+                            <strong>Estruturação Modular:</strong> A organização em pacotes e módulos (<code>entidades</code>, <code>analise</code>) tornou o sistema muito mais organizado e escalável.
+                        </li>
+                        <li>
+                            <strong>Integridade de Dados:</strong> O uso de <code>properties</code> com validações no setter e a validação de dados nos construtores (<code>__init__</code>) se mostraram fundamentais para garantir a confiabilidade do nosso sistema.
+                        </li>
+                        <li>
+                            <strong>Métodos Mágicos:</strong> Compreendemos o poder dos métodos mágicos (<code>__str__</code>, <code>__eq__</code>, <code>__hash__</code>) para criar objetos que se comportam de maneira intuitiva e se integram perfeitamente com as estruturas de dados do Python.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Slide 15: Agradecimentos -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2><i class="fas fa-thumbs-up"></i> Obrigado!</h2>
+                <p>Qualquer dúvida, estamos à disposição.</p>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-btn" id="prev-btn" onclick="previousSlide()">← Anterior</button>
+            <button class="nav-btn" id="next-btn" onclick="nextSlide()">Próximo →</button>
+        </div>
+    </div>
+    <script src="assets/js/slides.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
